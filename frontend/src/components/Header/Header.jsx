@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import LoginModal from '../LoginModal/LoginModal';
+import { useAuth } from '../../contexts/AuthContext';
 import './Header.css';
 
 const Header = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <>
@@ -12,9 +20,18 @@ const Header = () => {
         <div className="top-bar">
           <div className="container top-bar-content">
             <div className="top-bar-left">
-              <span>欢迎来到汁网！</span>
-              <button className="link-btn" onClick={() => setIsLoginModalOpen(true)}>登录</button> |
-              <button className="link-btn" onClick={() => setIsLoginModalOpen(true)}>注册猪圈账号</button>
+              {user ? (
+                <>
+                  <span>欢迎，<strong>{user.username}</strong> 猪！</span>
+                  <button className="link-btn" onClick={handleLogout}>退出登录</button>
+                </>
+              ) : (
+                <>
+                  <span>欢迎来到汁网！</span>
+                  <button className="link-btn" onClick={() => setIsLoginModalOpen(true)}>登录</button> |
+                  <button className="link-btn" onClick={() => setIsLoginModalOpen(true)}>注册猪圈账号</button>
+                </>
+              )}
             </div>
             <div className="top-bar-right">
               <a href="#">英文版 (English version coming never)</a>

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { submissionsApi } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
 import './SubmitModal.css';
 
-const SubmitModal = ({ isOpen, onClose, journalName }) => {
+const SubmitModal = ({ isOpen, onClose, journalId, journalName }) => {
     const [step, setStep] = useState(1); // 1: input, 2: uploading, 3: reviewing, 4: result
     const [paperTitle, setPaperTitle] = useState('');
     const [authorName, setAuthorName] = useState('');
     const [uploadProgress, setUploadProgress] = useState(0);
-    const [resultStatus, setResultStatus] = useState(null); // 'rejected' or 'accepted'
+    const [resultStatus, setResultStatus] = useState(null); // 'rejected' | 'accepted'
+    const [errorMsg, setErrorMsg] = useState('');
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setStep(1);
@@ -14,18 +20,48 @@ const SubmitModal = ({ isOpen, onClose, journalName }) => {
         setAuthorName('');
         setUploadProgress(0);
         setResultStatus(null);
+        setErrorMsg('');
         onClose();
     };
 
     if (!isOpen) return null;
+
+    // If not logged in, show a prompt
+    if (!user) {
+        return (
+            <div className="submit-modal-overlay">
+                <div className="submit-modal-content">
+                    <button className="submit-modal-close" onClick={handleClose}>&times;</button>
+                    <div className="submit-modal-header">
+                        <h2>向 {journalName} 丢稿系统</h2>
+                        <p>The Most Rigorous Academic Blackhole</p>
+                    </div>
+                    <div className="submit-modal-body" style={{ textAlign: 'center', padding: '30px 0' }}>
+                        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🐷</div>
+                        <h3>请先认证您的生猪身份</h3>
+                        <p style={{ color: '#888', margin: '12px 0 24px' }}>
+                            投稿需要登录猪圈账号，未注册的野猪请先完成登记。
+                        </p>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => { handleClose(); }}
+                        >
+                            关闭并去登录
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!paperTitle || !authorName) return;
 
         setStep(2); // Start Upload
+        setErrorMsg('');
 
-        // Simulate upload
+        // Simulate upload progress
         let progress = 0;
         const uploadInterval = setInterval(() => {
             progress += Math.floor(Math.random() * 20) + 10;
@@ -39,15 +75,17 @@ const SubmitModal = ({ isOpen, onClose, journalName }) => {
     };
 
     const startReview = () => {
-        setStep(3); // Start Review
-
-        // Simulate AI review
-        setTimeout(() => {
-            // 80% chance of rejection, 20% accepted
-            const isAccepted = Math.random() > 0.8;
-            setResultStatus(isAccepted ? 'accepted' : 'rejected');
-            setStep(4);
-        }, 2500);
+        setStep(3);
+        // Call real API - backend determines accept/reject
+        submissionsApi.submit(journalId, paperTitle, authorName)
+            .then((data) => {
+                setResultStatus(data.status); // 'accepted' or 'rejected'
+                setStep(4);
+            })
+            .catch((err) => {
+                setErrorMsg(err.message || '投稿系统崩溃，猪脑过热');
+                setStep(1);
+            });
     };
 
     return (
@@ -90,6 +128,7 @@ const SubmitModal = ({ isOpen, onClose, journalName }) => {
                                     <p>点击或拖拽您的虚假论文到此处上传 (仅支持 .txt, .pdf, .word(不可能的))</p>
                                 </div>
                             </div>
+                            {errorMsg && <div style={{ color: '#c00', marginBottom: '12px' }}>{errorMsg}</div>}
                             <button type="submit" className="btn btn-primary submit-action-btn">
                                 确认丢稿 (Submit to Blackhole)
                             </button>
