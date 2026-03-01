@@ -1,0 +1,50 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: zhiwang-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: zhiwang
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - zhiwang-net
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: zhiwang-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql+pymysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/zhiwang
+      SECRET_KEY: ${SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 1440
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - zhiwang-net
+
+  frontend:
+    build: ./frontend
+    container_name: zhiwang-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - zhiwang-net
+
+volumes:
+  mysql_data:
+
+
+networks:
+  zhiwang-net:
+    driver: bridge
