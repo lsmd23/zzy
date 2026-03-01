@@ -1,0 +1,73 @@
+:root {
+  --primary-red: #b01f24;
+  --secondary-red: #c62828;
+  --bg-light: #f5f6f7;
+  --text-main: #333333;
+  --text-light: #666666;
+  --border-color: #e0e0e0;
+  --link-blue: #0b559b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Microsoft YaHei", "SimSun", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--link-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--primary-red);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* Common utility classes mimicking generic UI structure */
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-red);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-red);
+  color: #fff;
+  text-decoration: none;
+}

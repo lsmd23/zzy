@@ -1,0 +1,35 @@
+.zhiwang-footer {
+    background-color: #f7f7f7;
+    border-top: 1px solid var(--border-color);
+    padding: 30px 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-links {
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+.footer-links a {
+    color: #333;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    color: var(--primary-red);
+}
+
+.footer-info {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.copyright {
+    margin-top: 15px;
+    font-size: 12px;
+}
