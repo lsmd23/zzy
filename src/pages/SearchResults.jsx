@@ -2,22 +2,29 @@ import React from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import './SearchResults.css';
 
-// Mock Data
-const MOCK_RESULTS = Array.from({ length: 15 }).map((_, i) => ({
-    id: `mock-${i}`,
-    title: i % 3 === 0 ? '母猪的产后护理研究综述与展望' : (i % 3 === 1 ? '论如何在DDL前一秒优雅地提交代码' : '高温对细菌繁殖的影响及烧烤火候研究'),
-    authors: i % 2 === 0 ? '张三猪 ; 李四狗' : '王二牛 ; 赵大力',
-    journal: i % 2 === 0 ? '《zzy生命科学研究中心学报》' : '《孜然》',
-    date: `202${Math.floor(Math.random() * 4) + 3}-${Math.floor(Math.random() * 11) + 1}-01`,
-    citations: Math.floor(Math.random() * 999),
-    downloads: Math.floor(Math.random() * 9999),
-}));
+// Generate dynamic mock data based on input
+const generateMockData = (q, category) => {
+    const baseTitle = q ? `关于“${q}”的` : (category ? `[${category}] 领域的` : `母猪的产后`);
+
+    return Array.from({ length: 15 }).map((_, i) => ({
+        id: `mock-${i}`,
+        title: i % 3 === 0 ? `${baseTitle}护理研究综述与展望` : (i % 3 === 1 ? `${baseTitle}如何在DDL前优雅提交代码` : `${baseTitle}高温对繁殖的影响及烧烤火候研究`),
+        authors: i % 2 === 0 ? '张三猪 ; 李四狗' : '王二牛 ; 赵大力',
+        journal: category ? (category === '博士猪论文' ? '《汁网优秀博猪士库》' : '《汁网会议辑览》') : (i % 2 === 0 ? '《zzy生命科学研究中心学报》' : '《孜然》'),
+        date: `202${Math.floor(Math.random() * 4) + 3}-${String(Math.floor(Math.random() * 11) + 1).padStart(2, '0')}-01`,
+        citations: Math.floor(Math.random() * 999),
+        downloads: Math.floor(Math.random() * 9999),
+    }));
+};
 
 const SearchResults = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const queryParams = new URLSearchParams(location.search);
     const q = queryParams.get('q') || '';
+    const category = queryParams.get('category') || '';
+    const mockData = generateMockData(q, category);
+
 
     return (
         <div className="search-results-page">
@@ -53,7 +60,11 @@ const SearchResults = () => {
                 {/* Main Results Area */}
                 <div className="results-main">
                     <div className="results-meta">
-                        找到与 <span className="highlight-keyword">" {q || '全部猪脑'} "</span> 相关的文献共 <strong>999,999+</strong> 篇
+                        {category ? (
+                            <>找到属于 <span className="highlight-keyword">" {category} "</span> 分类的文献共 <strong>999,999+</strong> 篇</>
+                        ) : (
+                            <>找到与 <span className="highlight-keyword">" {q || '全部猪脑'} "</span> 相关的文献共 <strong>999,999+</strong> 篇</>
+                        )}
                     </div>
 
                     <table className="results-table">
@@ -69,7 +80,7 @@ const SearchResults = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {MOCK_RESULTS.map((item, index) => (
+                            {mockData.map((item, index) => (
                                 <tr key={item.id}>
                                     <td className="text-center">{index + 1}</td>
                                     <td className="paper-title">

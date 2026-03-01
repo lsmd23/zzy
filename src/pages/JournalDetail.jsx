@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import SubmitModal from '../components/SubmitModal/SubmitModal';
 import './JournalDetail.css';
 
 const JOURNAL_DB = {
@@ -44,6 +45,7 @@ const JOURNAL_DB = {
 const JournalDetail = () => {
     const { id } = useParams();
     const journalInfo = JOURNAL_DB[id] || JOURNAL_DB['default'];
+    const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
     return (
         <div className="journal-detail-page">
@@ -61,7 +63,10 @@ const JournalDetail = () => {
                         <div className="impact-factor-box">
                             复合影响因子：<span>{journalInfo.impactFactor}</span>
                         </div>
-                        <button className="btn btn-primary btn-block mock-submit-btn">
+                        <button
+                            className="btn btn-primary btn-block mock-submit-btn"
+                            onClick={() => setIsSubmitModalOpen(true)}
+                        >
                             我要向本刊丢稿 (Submit)
                         </button>
                     </div>
@@ -107,6 +112,12 @@ const JournalDetail = () => {
                     </div>
                 </div>
             </div>
+
+            <SubmitModal
+                isOpen={isSubmitModalOpen}
+                onClose={() => setIsSubmitModalOpen(false)}
+                journalName={journalInfo.title}
+            />
         </div>
     );
 };

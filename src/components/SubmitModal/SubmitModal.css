@@ -1,0 +1,231 @@
+.submit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.submit-modal-content {
+    background: #fff;
+    width: 500px;
+    border-top: 6px solid #b01f24;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.submit-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+}
+
+.submit-modal-close:hover {
+    color: #b01f24;
+}
+
+.submit-modal-header {
+    padding: 20px;
+    text-align: center;
+    background: #fdfdfd;
+    border-bottom: 1px solid #eee;
+}
+
+.submit-modal-header h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.submit-modal-header p {
+    font-size: 13px;
+    color: #999;
+}
+
+.submit-modal-body {
+    padding: 30px 40px;
+}
+
+.submit-form-group {
+    margin-bottom: 20px;
+}
+
+.submit-form-group label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.submit-form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    outline: none;
+}
+
+.submit-form-group input:focus {
+    border-color: #b01f24;
+}
+
+.upload-box {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    background: #fcfcfc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-box:hover {
+    border-color: #b01f24;
+    background: #fff8f8;
+}
+
+.upload-icon {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.upload-box p {
+    font-size: 12px;
+    color: #777;
+}
+
+.submit-action-btn {
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.processing-state {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.processing-state h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #b01f24;
+    transition: width 0.3s;
+}
+
+.review-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #b01f24;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.result-state {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.result-icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.reject-icon {
+    color: #d32f2f;
+}
+
+.accept-icon {
+    color: #388e3c;
+}
+
+.result-state h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.result-desc {
+    font-size: 14px;
+    color: #555;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: left;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.pay-charge-box {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.pay-charge-box p {
+    font-size: 13px;
+    color: #e65100;
+    margin-bottom: 5px;
+}
+
+.pay-charge-box strong {
+    font-size: 15px;
+    color: #bf360c;
+}
+
+.back-btn {
+    width: 100%;
+    background: #666;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #555;
+}

@@ -31,13 +31,13 @@ const Header = () => {
             </Link>
             <nav className="nav-links">
               <ul>
-                <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>首页</NavLink></li>
-                <li><a href="#">期刊</a></li>
-                <li><a href="#">博士猪论文</a></li>
-                <li><a href="#">会议</a></li>
-                <li><a href="#">学术猪圈</a></li>
-                <li><a href="#">年鉴</a></li>
-                <li><a href="#">专利</a></li>
+                <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""} end>首页</NavLink></li>
+                <li><NavLink to="/search?category=期刊" className={() => window.location.search.includes('category=期刊') ? "active" : ""}>期刊</NavLink></li>
+                <li><NavLink to="/search?category=博士猪论文" className={() => window.location.search.includes('category=博士猪论文') ? "active" : ""}>博士猪论文</NavLink></li>
+                <li><NavLink to="/search?category=会议" className={() => window.location.search.includes('category=会议') ? "active" : ""}>会议</NavLink></li>
+                <li><NavLink to="/search?category=学术猪圈" className={() => window.location.search.includes('category=学术猪圈') ? "active" : ""}>学术猪圈</NavLink></li>
+                <li><NavLink to="/search?category=年鉴" className={() => window.location.search.includes('category=年鉴') ? "active" : ""}>年鉴</NavLink></li>
+                <li><NavLink to="/search?category=专利" className={() => window.location.search.includes('category=专利') ? "active" : ""}>专利</NavLink></li>
               </ul>
             </nav>
           </div>
