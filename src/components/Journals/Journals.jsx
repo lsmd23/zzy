@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Journals.css';
 
 const journalsData = [
     {
+        id: 'zi-ran',
         title: '《孜然》',
         sub_title: '(Nature - BBQ Edition)',
         field: '自然与烧烤科学',
@@ -10,6 +12,7 @@ const journalsData = [
         description: '国际顶级综合性孜然撒放学期刊。'
     },
     {
+        id: 'liao-xue',
         title: '《料学》',
         sub_title: '(Science of Ingredients)',
         field: '食品炼化学',
@@ -17,6 +20,7 @@ const journalsData = [
         description: '汇聚前沿八角、桂皮与香叶的研究成果。'
     },
     {
+        id: 'xi-jun',
         title: '《细菌》',
         sub_title: '(Cell - Spoiled Edition)',
         field: '生命倒推科学',
@@ -24,6 +28,7 @@ const journalsData = [
         description: '聚焦饭菜放久了之后微观世界的演变。'
     },
     {
+        id: 'se-hui',
         title: '《涩会科学研究》',
         sub_title: '(Awkward Social Science)',
         field: '人类尴尬学',
@@ -31,6 +36,7 @@ const journalsData = [
         description: '致力于研究社恐人群的各种发病机制与社死瞬间。'
     },
     {
+        id: 'zzy-center',
         title: '《zzy生命科学研究中心学报》',
         sub_title: '(ZZY Bio-Center Journal)',
         field: '顶级整活学',
@@ -40,6 +46,8 @@ const journalsData = [
 ];
 
 const Journals = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="journals-section">
             <div className="container">
@@ -49,8 +57,13 @@ const Journals = () => {
                 </div>
 
                 <div className="journals-grid">
-                    {journalsData.map((journal, index) => (
-                        <div className="journal-card" key={index}>
+                    {journalsData.map((journal) => (
+                        <div
+                            className="journal-card"
+                            key={journal.id}
+                            onClick={() => navigate(`/journal/${journal.id}`)}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <div className="journal-cover">
                                 <span className="cover-title">{journal.title}</span>
                                 <span className="cover-subtitle">{journal.sub_title}</span>
